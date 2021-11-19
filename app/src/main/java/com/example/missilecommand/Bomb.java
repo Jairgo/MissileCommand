@@ -8,7 +8,7 @@ import android.graphics.RectF;
 public class Bomb implements Figure{
     private final int maxSize = 80;
     private float radius;
-    private PointF center;
+    public PointF center;
     private Paint paint;
 
     public Bomb(PointF center){
@@ -41,7 +41,7 @@ public class Bomb implements Figure{
     }
 
     public float getRadius() {
-        return radius;
+        return this.radius;
     }
 
     public int getMaxSize() {

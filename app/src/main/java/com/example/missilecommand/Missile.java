@@ -4,15 +4,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Missile implements Figure {
 
-    private int div;
-    private float radius;
+    private final int div;
+    private final float radius;
     public PointF center;
     private Paint paint;
     private PointF velocity;
@@ -47,8 +46,8 @@ public class Missile implements Figure {
         double magnitude = rand.nextInt(10) + 1;
         double angle = Math.toRadians(rand.nextInt(360));
 
-        this.radius = 20;
-        this.velocity = new PointF(1,1);
+        radius = 20;
+        velocity = new PointF(1,1);
 
         paint = new Paint();
         paint.setARGB(255, 255, 233, 0);
@@ -65,7 +64,7 @@ public class Missile implements Figure {
 
     private void setObjective(RectF dimensiones, ArrayList<City> cities) {
 
-        ArrayList<Integer> posibles = new ArrayList<Integer>();
+        ArrayList<Integer> posibles = new ArrayList<>();
 
         for(int i = 0; i < cities.size(); i++){
             if(cities.get(i).isAlive()){
@@ -117,6 +116,35 @@ public class Missile implements Figure {
         return -1;
     }
 
+    /**
+     *
+     * @param cx Posición de la bomba en X
+     * @param cy Posicion de la bomba en Y
+     * @param radius Tamaño del radio actual de la bomba
+     * @param lineX Posición actual del misil en X
+     * @return True si encuentra alguna colision entre el misil y la bomba
+     */
+    public boolean detectCollisionBomb(float cx, float cy, float radius, float lineX){
+// temporary variables to set edges for testing
+        float testX = cx;
+        float testY = cy;
+
+
+        if (cx > lineX)
+            testX = lineX;
+
+        // get distance from closest edges
+        float distX = cx-testX;
+        float distY = cy-testY;
+        float distance = (float) Math.sqrt( (distX*distX) + (distY*distY) );
+
+        // if the distance is less than the radius, collision!
+        if (distance <= radius) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void update(RectF dimensions) {
 
@@ -131,6 +159,8 @@ public class Missile implements Figure {
             velocity.y *= -1;
         }*/
     }
+
+
 
     @Override
     public void draw(Canvas canvas) {

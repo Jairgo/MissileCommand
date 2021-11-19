@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,19 +20,21 @@ public class Board extends SurfaceView implements Runnable{
     private Thread thread = null;
     private RectF dimensions;
     private Canvas canvas;
-    private Intent intent;
+    // private Intent intent;
 
 
-    private ArrayList<Bomb> bombs = new ArrayList<Bomb>();
-    private ArrayList<Missile> missiles = new ArrayList<Missile>();
+    private ArrayList<Bomb> bombs = new ArrayList<>();
+    private ArrayList<Missile> missiles = new ArrayList<>();
 
-    private ArrayList<City> cities = new ArrayList<City>();
-    public ArrayList<Integer> posiblesCities = new ArrayList<Integer>();
+    private ArrayList<City> cities = new ArrayList<>();
+    // public ArrayList<Integer> posiblesCities = new ArrayList<>();
 
     private Battery battery;
     protected boolean gameOver = false;
     private int timerValue = -1, timerCount = 0;
     Thread hilo;
+
+    float misPosX, misPosY, bombPosX, bombPosY;
 
 
     public Board(Context context) {
@@ -83,9 +84,9 @@ public class Board extends SurfaceView implements Runnable{
     @Override
     public void run() {
         while (drawing){
-            checkBomb();
             update();
             draw();
+            checkBomb();
             checkCities();
         }
     }
@@ -94,18 +95,52 @@ public class Board extends SurfaceView implements Runnable{
 
 
     private void checkBomb(){
+        boolean eliminado = false;
+
         for (int i = 0; i < bombs.size(); i++){
-            if(bombs.get(i).getRadius() >= bombs.get(i).getMaxSize()){
-                // Log.i("BoardClass", "Se eliminó la bomba en la posición " + i);
-                // cities.remove(i);
-                bombs.remove(i);
+            if(!missiles.isEmpty()){
+                for(int j = 0; j < missiles.size(); j++){
+                    misPosX = missiles.get(j).center.x;
+                    misPosY = missiles.get(j).center.y;
+
+                    bombPosX = bombs.get(i).center.x;
+                    bombPosY = bombs.get(i).center.y;
+
+                    float a = (float) Math.pow((misPosX - bombPosX), (float) 2);
+                    float b = (float) Math.pow((misPosY - bombPosY), (float) 2);
+
+                    float distancia = (float) Math.sqrt((a+b));
+
+
+                    // distancia = PointF.length(missiles.get(i).center.x, missiles.get(i).center.y);
+                    // float distancia = missiles.get(j).center - bombs.get(i).center;
+                    if(distancia <= bombs.get(i).getRadius() ){
+                        bombs.remove(i);
+                        missiles.remove(j);
+                        eliminado = true;
+                        break;
+                    }
+                }
             }
+
+
+            if(!eliminado){
+                if(bombs.get(i).getRadius() >= bombs.get(i).getMaxSize()){
+                    // Log.i("BoardClass", "Se eliminó la bomba en la posición " + i);
+                    // cities.remove(i);
+                    bombs.remove(i);
+                }
+                eliminado = false;
+            }
+
         }
     }
 
     public int getTimerValue(){
         return this.timerValue;
     }
+
+
 
     private void update() {
         Runnable runnable = new Runnable() {
@@ -126,7 +161,7 @@ public class Board extends SurfaceView implements Runnable{
             }
         };
 
-        if(timerValue == -1){
+        if(getTimerValue() == -1){
             hilo = new Thread(runnable);
             hilo.start();
         }
@@ -153,8 +188,8 @@ public class Board extends SurfaceView implements Runnable{
                     // cities.remove(missiles.get(i).detectCollisionCity());
                 // posiblesCities.remove(missiles.get(i).detectCollisionCity());
                 missiles.remove(i);
+                break;
             }
-
         }
 
         /*for (Figure figure : new ArrayList<>(bombs))
@@ -207,7 +242,7 @@ public class Board extends SurfaceView implements Runnable{
     }
 
     public void checkCities(){
-        boolean allClear = false;
+
         int count = 0;
 
         for(int i = 0; i < cities.size(); i++){
