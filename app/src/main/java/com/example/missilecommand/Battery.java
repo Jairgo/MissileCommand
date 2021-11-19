@@ -8,30 +8,27 @@ import android.graphics.RectF;
 
 public class Battery implements Figure {
 
-    private float left;
-    private float top;
-    private float right;
-    private float  bottom;
     private PointF objective;
     private Paint paint;
     private Path path;
 
     public Battery(RectF dimensiones, float x){
         this.objective = new PointF(x, dimensiones.bottom);
+        final float radius = 150;
 
         paint = new Paint();
         paint.setARGB(255,150, 152, 154);
 
-        float radius = 150;
         float radians = (float)Math.toRadians(30);
-
         PointF vertexA = new PointF(
                 (float)(Math.cos(radians) * radius) + objective.x,
                 (float)(Math.sin(radians) * radius) + objective.y);
+
         radians = (float)Math.toRadians(150);
         PointF vertexB = new PointF(
                 (float)(Math.cos(radians) * radius) + objective.x,
                 (float)(Math.sin(radians) * radius) + objective.y);
+
         radians = (float)Math.toRadians(270);
         PointF vertexC = new PointF(
                 (float)(Math.cos(radians) * radius) + objective.x,

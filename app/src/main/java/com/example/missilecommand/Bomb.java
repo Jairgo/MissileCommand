@@ -1,38 +1,32 @@
 package com.example.missilecommand;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
-public class Bomb implements Figure{
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Bomb extends AppCompatActivity implements Figure{
     private final int maxSize = 80;
     private float radius;
     public PointF center;
     private Paint paint;
+
 
     public Bomb(PointF center){
         this.center = new PointF(center.x, center.y);
         this.radius = 1;
         paint = new Paint();
         paint.setARGB(255, 255, 0, 0);
-
     }
 
     @Override
     public void update(RectF dimensions) {
         if(this.radius <= maxSize)
             this.radius += 1;
-
-
-        // center.x += velocity.x;
-        // center.y += velocity.y;
-
-        // if ((center.x - radius) < dimensions.left || (center.x + radius) > dimensions.right)
-        // velocity.x *= -1;
-
-        // if ((center.y - radius) < dimensions.top || (center.y + radius) > dimensions.bottom)
-        // velocity.y *= -1;
     }
 
     @Override

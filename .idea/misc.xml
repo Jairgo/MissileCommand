@@ -3,7 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout-land/activity_end.xml" value="0.21516754850088182" />
+        <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout-land/activity_end_game.xml" value="0.11022927689594356" />
+        <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout-land/activity_finish.xml" value="0.11022927689594356" />
         <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout-land/activity_main.xml" value="0.20104166666666667" />
+        <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout/activity_end_game.xml" value="0.24682971014492755" />
+        <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout/activity_finish.xml" value="0.24682971014492755" />
         <entry key="..\:/Documents/Universidad/Proyectos_Android/MissileCommand/app/src/main/res/layout/activity_main.xml" value="0.17481884057971014" />
       </map>
     </option>

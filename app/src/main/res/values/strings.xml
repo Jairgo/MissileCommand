@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MissileCommand</string>
+    <string name="endGame">GAME OVER!</string>
+    <string name="destroyed">Missiles destroyed:</string>
+    <string name="newGame">New Game</string>
 </resources>
